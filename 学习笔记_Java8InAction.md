@@ -70,4 +70,14 @@ p17 默认方法没懂。
 
 集合关注数据，流关注计算。
 
+数据源，中间操作链，终端操作。
+
+## 第五章 
+介绍常用的流方法
+
+筛选和切片：filter，distinct，limit，skip，</br>
+映射：map，flatmap</br>
+查找和匹配：anyMatch，allMatch，noneMatch，findFirst，findAny；返回对象Optional \<T>
+
+
 
