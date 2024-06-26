@@ -78,6 +78,26 @@ p17 默认方法没懂。
 筛选和切片：filter，distinct，limit，skip，</br>
 映射：map，flatmap</br>
 查找和匹配：anyMatch，allMatch，noneMatch，findFirst，findAny；返回对象Optional \<T>
+规约（折叠）：将流中所有元素反复结合。
 
+| 中间操作 |      |      |
+| --------- | ---- | ---- |
+| filter    |      |      |
+| distinct  |      |      |
+| skip      |      |      |
+| limit     |      |      |
+| map       |      |      |
+| flatMap   |      |      |
+| sorted    |      |      |
+| **终端操作** |      |      |
+| anyMatch |      |      |
+| noneMatch |      |      |
+| allMatch  |      |      |
+| findAny   |      |      |
+| findFirst |      |      |
+| forMatch  |      |      |
+| collect   |      |      |
+| reduce    |      |      |
+| count     |      |      |
 
-
+理解为这些是流的基本方法，类似于写编程语言式的的组件
