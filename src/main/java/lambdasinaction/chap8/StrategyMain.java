@@ -1,6 +1,9 @@
 package lambdasinaction.chap8;
 
 
+/**
+ * @author raoulDoc
+ */
 public class StrategyMain {
 
     public static void main(String[] args) {
@@ -19,7 +22,7 @@ public class StrategyMain {
     }
 
     interface ValidationStrategy {
-        public boolean execute(String s);
+        boolean execute(String s);
     }
 
     private static class IsAllLowerCase implements ValidationStrategy {
