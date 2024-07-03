@@ -6,6 +6,9 @@ import java.util.stream.LongStream;
 
 import static lambdasinaction.chap7.ParallelStreamsHarness.FORK_JOIN_POOL;
 
+/**
+ * @author Fusco
+ */
 public class ForkJoinSumCalculator extends RecursiveTask<Long> {
 
     public static final long THRESHOLD = 10_000;

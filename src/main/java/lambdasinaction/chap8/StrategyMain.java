@@ -11,7 +11,7 @@ public class StrategyMain {
         System.out.println(v2.validate("bbbb"));
 
 
-        // with lambdas
+        // with lambdas 不需要声明新的类来实现不同的策略，更简洁。
         Validator v3 = new Validator((String s) -> s.matches("\\d+"));
         System.out.println(v3.validate("aaaa"));
         Validator v4 = new Validator((String s) -> s.matches("[a-z]+"));
@@ -22,22 +22,27 @@ public class StrategyMain {
         public boolean execute(String s);
     }
 
-    static private class IsAllLowerCase implements ValidationStrategy {
+    private static class IsAllLowerCase implements ValidationStrategy {
+        @Override
         public boolean execute(String s){
             return s.matches("[a-z]+");
         }
     }
-    static private class IsNumeric implements ValidationStrategy {
+
+    private static class IsNumeric implements ValidationStrategy {
+        @Override
         public boolean execute(String s){
             return s.matches("\\d+");
         }
     }
 
-    static private class Validator{
+    private static class Validator{
         private final ValidationStrategy strategy;
+
         public Validator(ValidationStrategy v){
             this.strategy = v;
         }
+
         public boolean validate(String s){
             return strategy.execute(s); }
     }
