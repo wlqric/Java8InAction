@@ -129,3 +129,17 @@ spliterator，并行执行版的Iterator，遍历元素
 
 看到责任链模式。
 
+
+
+# 第10章 Optional
+
+
+
+# 第11章 CompletableFuture
+
+重要
+
+
+
+用stream，用CompletableFuture去写代码，让自己习惯这种风格。
+

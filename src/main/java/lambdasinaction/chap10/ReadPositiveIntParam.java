@@ -41,13 +41,15 @@ public class ReadPositiveIntParam {
         return 0;
     }
 
+    // 如果里面任何一个操作返回一个空的Optional对象，该方法都会返回orElse设置的默认值（0）
     public static int readDurationWithOptional(Properties props, String name) {
         return ofNullable(props.getProperty(name))
-                .flatMap(ReadPositiveIntParam::s2i)
-                .filter(i -> i > 0).orElse(0);
+                .flatMap(ReadPositiveIntParam::stringToInt)
+                .filter(i -> i > 0)
+                .orElse(0);
     }
 
-    public static Optional<Integer> s2i(String s) {
+    public static Optional<Integer> stringToInt(String s) {
         try {
             return of(Integer.parseInt(s));
         } catch (NumberFormatException e) {
