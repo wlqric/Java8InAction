@@ -16,6 +16,7 @@ public class ShopMain {
     doSomethingElse();
     // while the price of the product is being calculated
     try {
+        // Future的get方法 读价格
         double price = futurePrice.get();
         System.out.printf("Price is %.2f%n", price);
     } catch (ExecutionException | InterruptedException e) {

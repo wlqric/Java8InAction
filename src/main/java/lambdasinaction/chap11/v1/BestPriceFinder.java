@@ -3,14 +3,7 @@ package lambdasinaction.chap11.v1;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,8 +15,8 @@ public class BestPriceFinder {
     private final List<Shop> shops = Arrays.asList(new Shop("BestPrice"),
                                                    new Shop("LetsSaveBig"),
                                                    new Shop("MyFavoriteShop"),
-                                                   new Shop("BuyItAll")/*,
-                                                   new Shop("ShopEasy")*/);
+                                                   new Shop("BuyItAll"),
+                                                   new Shop("ShopEasy"));
 
     private final Executor executor = Executors.newFixedThreadPool(shops.size(), new ThreadFactory() {
         @Override
@@ -46,7 +39,23 @@ public class BestPriceFinder {
                 .collect(Collectors.toList());
     }
 
+
+    public List<String> findPricesParallelWithForkJoinPool(String product) {
+        int parallelism = 10;
+        ForkJoinPool customThreadPool = new ForkJoinPool(parallelism);
+        // 使用自定义的 ForkJoinPool 执行并行流操作
+        List<String> prices = customThreadPool.submit(() ->
+            shops.parallelStream()
+                    .map(shop -> shop.getName() + " price is " + shop.getPrice(product))
+                    .collect(Collectors.toList())
+        ).join();
+
+        customThreadPool.shutdown();
+        return prices;
+    }
+
     public List<String> findPricesFuture(String product) {
+        // 异步计算每种商品的价格
         List<CompletableFuture<String>> priceFutures =
                 shops.stream()
                 .map(shop -> CompletableFuture.supplyAsync(() -> shop.getName() + " price is "
@@ -54,6 +63,7 @@ public class BestPriceFinder {
                 .collect(Collectors.toList());
 
         List<String> prices = priceFutures.stream()
+                // join 用于获取对象的计算结果
                 .map(CompletableFuture::join)
                 .collect(Collectors.toList());
         return prices;

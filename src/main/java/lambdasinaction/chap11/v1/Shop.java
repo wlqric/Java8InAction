@@ -27,6 +27,7 @@ public class Shop {
 
     public Future<Double> getPriceAsync(String product) {
         CompletableFuture<Double> futurePrice = new CompletableFuture<>();
+        // fork一个新线程,异步执行计算,结果放回主线程
         new Thread( () -> {
                     double price = calculatePrice(product);
                     futurePrice.complete(price);

@@ -18,7 +18,6 @@ public class AsyncShop {
     }
 
     public Future<Double> getPrice(String product) {
-/*
         CompletableFuture<Double> futurePrice = new CompletableFuture<>();
         new Thread( () -> {
                     try {
@@ -29,7 +28,12 @@ public class AsyncShop {
                     }
         }).start();
         return futurePrice;
-*/
+    }
+
+    /**
+     * CompletableFuture自身提供了大量工厂方法,跟上方的等价
+     */
+    public Future<Double> getPriceAsync(String product) {
         return CompletableFuture.supplyAsync(() -> calculatePrice(product));
     }
 

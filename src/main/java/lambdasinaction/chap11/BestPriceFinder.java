@@ -17,11 +17,11 @@ public class BestPriceFinder {
                                                    new Shop("BuyItAll"),
                                                    new Shop("ShopEasy"));
 
-    private final Executor executor = Executors.newFixedThreadPool(shops.size(), new ThreadFactory() {
+    private final Executor executor = Executors.newFixedThreadPool( Math.min(shops.size(), 100) , new ThreadFactory() {
         @Override
         public Thread newThread(Runnable r) {
             Thread t = new Thread(r);
-            t.setDaemon(true);
+            t.setDaemon(true); // 使用守护线程,不会阻止程序关停
             return t;
         }
     });
@@ -47,6 +47,7 @@ public class BestPriceFinder {
                 .collect(Collectors.<CompletableFuture<String>>toList());
 
         return priceFutures.stream()
+                // 等流中所有的Future执行完毕，并提取各自的返回值
                 .map(CompletableFuture::join)
                 .collect(Collectors.toList());
     }

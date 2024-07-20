@@ -137,9 +137,36 @@ spliterator，并行执行版的Iterator，遍历元素
 
 # 第11章 CompletableFuture
 
-重要
+|          | 实现                           | 特点                                                    |
+| -------- | ------------------------------ | ------------------------------------------------------- |
+| 并行处理 | 用分支/合并框架、并行流        | 一个操作 -> 多个子操作，在不同核/CPU/机器上并行执行     |
+| 并发处理 | 用Future、CompetableFuture接口 | 充分利用这个CPU核（减少远程服务、查数据库等的阻塞时间） |
+
+### 并行该选择哪个
+
+Stream适合：计算密集型，且没有I/O；流的延迟特性让我们难以判断什么时候触发了等待。
+
+CompletableFuture适合：并行单元有I/O或网络连接等待，根据等待/计算设定线程数。
 
 
 
-用stream，用CompletableFuture去写代码，让自己习惯这种风格。
+`Future`：建模了异步计算，比`Thread`易用
+
+CompletableFuture之于Future，如同Stream之于Collection。
+
+异步api如何返回：要么回调函数，要么调用方再次执行一个方法（等待，直到计算完成）
+
+要点:
+
+为客户异步api;
+
+CompletableFuture提供了异常管理,可以抛出/管理异步任务发生的异常;
+
+
+
+<img src="./学习笔记_Java8InAction.assets/Snipaste_2024-07-20_11-16-45-1721445869195-2.png" alt="Snipaste_2024-07-20_11-16-45" style="zoom:50%;" />
+
+<img src="./学习笔记_Java8InAction.assets/Snipaste_2024-07-20_11-19-04.png" alt="Snipaste_2024-07-20_11-19-04" style="zoom:50%;" />
+
+CompletableFuture比并行流好的原因：可以配置执行器，尤其是线程池的大小。并行流不可以。
 
